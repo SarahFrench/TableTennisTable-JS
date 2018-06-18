@@ -5,7 +5,7 @@ const InvalidArgumentException = require('./invalid_argument_exception');
 exports.startGame = function (initialLeague) {
   let league = initialLeague;
 
-  function recordWin(command) {
+  function recordWin (command) {
     const regex = /record win (\w*) (\w*)/;
     const found = command.match(regex);
     const winner = found[1];
@@ -14,13 +14,13 @@ exports.startGame = function (initialLeague) {
     league.recordWin(winner, loser);
   }
 
-  function save(command) {
+  function save (command) {
     const regex = /save (.*)$/;
     const filename = command.match(regex)[1];
     fileService.save(filename, league);
   }
 
-  function load(command) {
+  function load (command) {
     const regex = /load (.*)$/;
     const filename = command.match(regex)[1];
     league = fileService.load(filename);
