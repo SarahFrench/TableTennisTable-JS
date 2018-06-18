@@ -121,12 +121,22 @@ describe('league app', function () {
 
       game.sendCommand(`save "${absolutePath}"`);
 
-        const fileContents = JSON.parse(fs.readFileSync(absolutePath, 'utf8'));
+      const fileContents = JSON.parse(fs.readFileSync(absolutePath, 'utf8'));
       expect(fileContents).to.eql([
         ['Alec'],
         ['Barry', 'Cip'],
         ['Deniz']
       ]);
+    });
+
+    it('does not save a file to a missing directory', function () {
+      const game = app.startGame(gameState.createLeague());
+      const path = getTemporaryFilePath('not_a_directory/game.json');
+
+      const result = game.sendCommand(`save "${path}"`);
+
+      expect(result).to.contain('Could not save file');
+      expect(fs.existsSync(path)).to.be.false;
     });
 
     function getTemporaryFilePath (name) {
