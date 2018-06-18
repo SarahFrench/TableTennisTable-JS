@@ -9,6 +9,10 @@ module.exports = {
         "sourceType": "module"
     },
     "rules": {
+        "eqeqeq": [
+            "error",
+            "always"
+        ],
         "indent": [
             "error",
             2,
@@ -26,6 +30,10 @@ module.exports = {
             "single"
         ],
         "semi": [
+            "error",
+            "always"
+        ],
+        "space-before-function-paren": [
             "error",
             "always"
         ]

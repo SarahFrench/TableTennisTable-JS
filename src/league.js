@@ -1,4 +1,18 @@
 const InvalidArgumentException = require('./invalid_argument_exception');
+const leagueRow = require('./league_row');
+
+exports.createLeague = function () {
+  return buildLeague([]);
+};
+
+exports.load = function (gameState) {
+  validate(gameState);
+
+  const rows = gameState.map(function (row, index) {
+    return leagueRow.create(index + 1, row);
+  });
+  return buildLeague(rows);
+};
 
 function buildLeague (players) {
   const rows = players;
@@ -7,19 +21,19 @@ function buildLeague (players) {
     validateName(player);
     checkPlayerIsUnique(player);
 
-    if (rows.length == 0 || bottomRow().isFull()) {
+    if (rows.length === 0 || bottomRow().isFull()) {
       addRow();
     }
 
     bottomRow().add(player);
   }
 
-  function bottomRow() {
+  function bottomRow () {
     return rows[rows.length - 1];
   }
 
-  function addRow() {
-    const newRow = leagueRow(rows.length + 1);
+  function addRow () {
+    const newRow = leagueRow.create(rows.length + 1);
     rows.push(newRow);
   }
 
@@ -30,7 +44,7 @@ function buildLeague (players) {
     const winnerRowIndex = findPlayerRowIndex(winner);
     const loserRowIndex = findPlayerRowIndex(loser);
 
-    if (winnerRowIndex - loserRowIndex != 1) {
+    if (winnerRowIndex - loserRowIndex !== 1) {
       throw new InvalidArgumentException(`Cannot record match result. Winner '${winner}' must be one row below loser '${loser}'`);
     }
 
@@ -45,7 +59,7 @@ function buildLeague (players) {
     return null;
   }
 
-  function validateName(player) {
+  function validateName (player) {
     if (!player.match(/^\w+$/)) {
       throw new InvalidArgumentException(`Player name ${player} contains invalid characters`);
     }
@@ -79,47 +93,19 @@ function buildLeague (players) {
   };
 }
 
-exports.createLeague = function () {
-  return buildLeague([]);
-};
-
-exports.load = function (gameState) {
-  validate(gameState);
-
-  const rows = gameState.map(function (row, index) {
-    return leagueRow(index + 1, row);
-  });
-  return buildLeague(rows);
-};
-
 function validate (gameState) {
   const bottomRowIndex = gameState.length - 1;
   gameState.forEach(function (row, index) {
     const maxLength = index + 1;
     let rowHascorrectLength;
-    if (index == bottomRowIndex) {
+    if (index === bottomRowIndex) {
       rowHascorrectLength = row.length <= maxLength;
     } else {
-      rowHascorrectLength = row.length == maxLength;
+      rowHascorrectLength = row.length === maxLength;
     }
 
     if (!rowHascorrectLength) {
       throw new InvalidArgumentException('Invalid game state');
     }
   });
-}
-
-function leagueRow(maxSize, players = []) {
-  function swap (playerToRemove, playerToAdd) {
-    const playerIndex = players.findIndex(player => player === playerToRemove);
-    players.splice(playerIndex, 1, playerToAdd);
-  }
-
-  return {
-    getPlayers: function () { return players; },
-    add: function (player) { players.push(player); },
-    isFull: function () { return players.length === maxSize; },
-    includes: function (player) { return players.includes(player); },
-    swap: swap
-  };
 }
