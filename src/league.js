@@ -1,4 +1,4 @@
-const InvalidArgumentException = require('../src/invalid_argument_exception');
+const InvalidArgumentException = require('./invalid_argument_exception');
 
 function buildLeague (players) {
   const rows = players;

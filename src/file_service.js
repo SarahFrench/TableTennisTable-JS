@@ -4,9 +4,14 @@ const path = require('path');
 
 exports.save = function (absolutePath, league) {
   const players = league.getPlayers();
-  fs.writeFileSync(absolutePath, JSON.stringify(players), { flag: 'w' }, function (err) {
-    throw err;
-  });
+  try {
+    fs.writeFileSync(absolutePath, JSON.stringify(players), { flag: 'w' });
+  } catch (e) {
+    if (e.code === "ENOENT") {
+      return `Could not save file to ${absolutePath}`;
+    }
+    throw e;
+  }
 };
 
 exports.load = function (absolutePath) {
