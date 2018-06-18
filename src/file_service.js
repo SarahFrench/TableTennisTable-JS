@@ -18,6 +18,9 @@ exports.load = function (path) {
   try {
     return gameState.load(JSON.parse(fs.readFileSync(path, 'utf8')));
   } catch (e) {
+    if (e instanceof SyntaxError) {
+      throw new InvalidArgumentException(`File is not valid JSON: ${path}`);
+    }
     if (e.code === 'ENOENT') {
       throw new InvalidArgumentException(`Could not load file from ${path}`);
     }
