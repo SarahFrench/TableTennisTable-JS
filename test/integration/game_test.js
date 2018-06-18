@@ -180,5 +180,21 @@ describe('league app', function () {
 -------------------`
       );
     });
+
+    it('does not load an invalid game', function () {
+      const gameFile = path.resolve(__dirname, '../fixtures/invalid_game.json');
+
+      const game = app.startGame(gameState.createLeague());
+      game.sendCommand('add player Bob');
+
+      const result = game.sendCommand(`load ${gameFile}`);
+
+      expect(result).to.contain('Invalid game state');
+      expect(game.sendCommand('print')).to.equal(
+`-------------------
+|       Bob       |
+-------------------`
+      );
+    });
   });
 });
