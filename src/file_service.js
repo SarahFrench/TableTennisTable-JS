@@ -1,6 +1,5 @@
 const fs = require('fs');
 const gameState = require('./league');
-const path = require('path');
 const InvalidArgumentException = require('./invalid_argument_exception');
 
 exports.save = function (path, league) {
@@ -8,7 +7,7 @@ exports.save = function (path, league) {
   try {
     fs.writeFileSync(path, JSON.stringify(players), { flag: 'w' });
   } catch (e) {
-    if (e.code === "ENOENT") {
+    if (e.code === 'ENOENT') {
       throw new InvalidArgumentException(`Could not save file to ${path}`);
     }
     throw e;
@@ -19,7 +18,7 @@ exports.load = function (path) {
   try {
     return gameState.load(JSON.parse(fs.readFileSync(path, 'utf8')));
   } catch (e) {
-    if (e.code === "ENOENT") {
+    if (e.code === 'ENOENT') {
       throw new InvalidArgumentException(`Could not load file from ${path}`);
     }
     throw e;
