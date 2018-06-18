@@ -94,15 +94,10 @@ describe('league app', function () {
     });
 
     afterEach(function () {
-      fs.readdir(tempDir, (err, files) => {
-        if (err) throw err;
-
-        for (const file of files) {
-          fs.unlink(path.join(tempDir, file), err => {
-            if (err) throw err;
-          });
-        }
-      })
+      const files = fs.readdirSync(tempDir);
+      for (const file of files) {
+        fs.unlinkSync(path.join(tempDir, file));
+      }
     });
 
     it('stores an empty game state to disk', function () {
