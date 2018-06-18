@@ -15,13 +15,13 @@ exports.startGame = function (initialLeague) {
   }
 
   function save(command) {
-    const regex = /save (.*)$/
+    const regex = /save (.*)$/;
     const filename = command.match(regex)[1];
     fileService.save(filename, league);
   }
 
   function load(command) {
-    const regex = /load (.*)$/
+    const regex = /load (.*)$/;
     const filename = command.match(regex)[1];
     league = fileService.load(filename);
   }
