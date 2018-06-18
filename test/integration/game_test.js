@@ -196,5 +196,21 @@ describe('league app', function () {
 -------------------`
       );
     });
+
+    it('does not load invalid json', function () {
+      const gameFile = path.resolve(__dirname, '../fixtures/invalid_json.json');
+
+      const game = app.startGame(gameState.createLeague());
+      game.sendCommand('add player Bob');
+
+      const result = game.sendCommand(`load ${gameFile}`);
+
+      expect(result).to.contain('File is not valid JSON');
+      expect(game.sendCommand('print')).to.equal(
+`-------------------
+|       Bob       |
+-------------------`
+      );
+    });
   });
 });
