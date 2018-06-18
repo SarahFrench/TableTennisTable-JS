@@ -164,5 +164,21 @@ describe('league app', function () {
 ------------------- ------------------- -------------------`
       );
     });
+
+    it('does not load a game from a missing file', function () {
+      const gameFile = path.resolve(__dirname, '../fixtures/some_unknown_file.json');
+
+      const game = app.startGame(gameState.createLeague());
+      game.sendCommand('add player Bob');
+
+      const result = game.sendCommand(`load "${gameFile}"`);
+
+      expect(result).to.contain('Could not load file');
+      expect(game.sendCommand('print')).to.equal(
+`-------------------
+|       Bob       |
+-------------------`
+      );
+    });
   });
 });
