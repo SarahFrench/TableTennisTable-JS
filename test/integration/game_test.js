@@ -104,7 +104,7 @@ describe('league app', function () {
       const game = app.startGame(gameState.createLeague());
       const absolutePath = getTemporaryFilePath('empty_game.json');
 
-      game.sendCommand(`save "${absolutePath}"`);
+      game.sendCommand(`save ${absolutePath}`);
 
       const fileContents = JSON.parse(fs.readFileSync(absolutePath, 'utf8'));
       expect(fileContents).to.eql([]);
@@ -119,7 +119,7 @@ describe('league app', function () {
 
       const absolutePath = getTemporaryFilePath('in_progress_game.json');
 
-      game.sendCommand(`save "${absolutePath}"`);
+      game.sendCommand(`save ${absolutePath}`);
 
       const fileContents = JSON.parse(fs.readFileSync(absolutePath, 'utf8'));
       expect(fileContents).to.eql([
@@ -133,7 +133,7 @@ describe('league app', function () {
       const game = app.startGame(gameState.createLeague());
       const path = getTemporaryFilePath('not_a_directory/game.json');
 
-      const result = game.sendCommand(`save "${path}"`);
+      const result = game.sendCommand(`save ${path}`);
 
       expect(result).to.contain('Could not save file');
       expect(fs.existsSync(path)).to.be.false;
@@ -150,7 +150,7 @@ describe('league app', function () {
 
       const game = app.startGame(gameState.createLeague());
 
-      game.sendCommand(`load "${gameFile}"`);
+      game.sendCommand(`load ${gameFile}`);
 
       expect(game.sendCommand('print')).to.equal(
 `                    -------------------
@@ -171,7 +171,7 @@ describe('league app', function () {
       const game = app.startGame(gameState.createLeague());
       game.sendCommand('add player Bob');
 
-      const result = game.sendCommand(`load "${gameFile}"`);
+      const result = game.sendCommand(`load ${gameFile}`);
 
       expect(result).to.contain('Could not load file');
       expect(game.sendCommand('print')).to.equal(
