@@ -38,7 +38,7 @@ ${padding}${rowBoundary}`
   return 'No players yet';
 };
 
-function formatName(name) {
+function formatName (name) {
   const nameLength = name.length;
 
   if (nameLength <= maxNameLength) {
