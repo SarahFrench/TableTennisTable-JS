@@ -85,7 +85,7 @@ describe('league app', function () {
   });
 
   describe('save to disk', function () {
-    const tempDir = path.resolve(__dirname, 'tmp')
+    const tempDir = path.resolve(__dirname, 'tmp');
 
     before(function () {
       if (!fs.existsSync(tempDir)) {
