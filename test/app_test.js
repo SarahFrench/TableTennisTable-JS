@@ -71,7 +71,7 @@ describe('app command processing', function () {
 
     const game = app.startGame(league);
 
-    game.sendCommand('save "/some/filename.json"');
+    game.sendCommand('save /some/filename.json');
 
     fileService.verify();
   });
@@ -84,7 +84,7 @@ describe('app command processing', function () {
 
     const game = app.startGame(gameState.createLeague());
 
-    game.sendCommand('load "/some/file/path"');
+    game.sendCommand('load /some/file/path');
 
     expect(game.sendCommand('winner')).to.equal('Alice');
   });
