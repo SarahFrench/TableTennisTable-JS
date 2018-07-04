@@ -46,3 +46,18 @@ Feature: Run a table tennis league
     And I print the league
     Then I should see "Alice" in row 1
     And I should see "Dana" in row 3
+
+  Scenario: save a game
+    Given the league has players:
+      | Alice   |
+      | Bob     |
+      | Charles |
+      | Dana    |
+    When I save the game to "saved_game.json"
+    And I start a new game
+    And I load the game from "saved_game.json"
+    And I print the league
+    Then I should see "Alice" in row 1
+    And I should see "Bob" in row 2
+    And I should see "Charles" in row 2
+    And I should see "Dana" in row 3
