@@ -16,3 +16,12 @@ Feature: Run a table tennis league
     And I should see "Bob" in row 2
     And I should see "Charles" in row 2
     And I should see "Dana" in row 3
+
+  Scenario: find the winner
+    Given the league has players:
+      | Alice   |
+      | Bob     |
+      | Charles |
+      | Dana    |
+    When I check the winner
+    Then I should see that "Alice" is the winner

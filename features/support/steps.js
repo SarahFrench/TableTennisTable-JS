@@ -17,6 +17,10 @@ When('I print the league', function () {
   this.response = this.game.sendCommand('print');
 });
 
+When('I check the winner', function () {
+  this.response = this.game.sendCommand('winner');
+});
+
 Then('I should see that there are no players', function () {
   expect(this.response).to.equal('No players yet');
 });
@@ -29,4 +33,8 @@ Then('I should see {string} in row {int}', function (player, rowNumber) {
   const actualNames = playerLine.match(/\w+/g);
 
   expect(actualNames).to.contain(player);
+});
+
+Then('I should see that {string} is the winner', function (player) {
+  expect(this.response).to.equal(player);
 });
