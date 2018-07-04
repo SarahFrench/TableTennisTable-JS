@@ -21,6 +21,10 @@ When('I check the winner', function () {
   this.response = this.game.sendCommand('winner');
 });
 
+When('{string} wins a match against {string}', function (winner, loser) {
+  this.game.sendCommand(`record win ${winner} ${loser}`);
+});
+
 Then('I should see that there are no players', function () {
   expect(this.response).to.equal('No players yet');
 });

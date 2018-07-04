@@ -25,3 +25,24 @@ Feature: Run a table tennis league
       | Dana    |
     When I check the winner
     Then I should see that "Alice" is the winner
+
+  Scenario: record a win
+    Given the league has players:
+      | Alice   |
+      | Bob     |
+      | Charles |
+    When "Charles" wins a match against "Alice"
+    And I print the league
+    Then I should see "Charles" in row 1
+    And I should see "Alice" in row 2
+
+  Scenario: record a win between players on non-adjacent rungs
+    Given the league has players:
+      | Alice   |
+      | Bob     |
+      | Charles |
+      | Dana    |
+    When "Dana" wins a match against "Alice"
+    And I print the league
+    Then I should see "Alice" in row 1
+    And I should see "Dana" in row 3
