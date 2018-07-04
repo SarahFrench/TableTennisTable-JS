@@ -4,7 +4,9 @@
   "description": "A ranking system for table tennis",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --recursive"
+    "test": "mocha --recursive && cucumber-js",
+    "mocha": "mocha --recursive",
+    "feature": "cucumber-js"
   },
   "author": "",
   "license": "UNLICENSED",
