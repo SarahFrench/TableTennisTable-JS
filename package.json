@@ -4,12 +4,15 @@
   "description": "A ranking system for table tennis",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --recursive"
+    "test": "mocha --recursive && cucumber-js",
+    "mocha": "mocha --recursive",
+    "feature": "cucumber-js"
   },
   "author": "",
   "license": "UNLICENSED",
   "devDependencies": {
     "chai": "^4.1.2",
+    "cucumber": "^4.2.1",
     "eslint": "^4.19.1",
     "mocha": "^5.2.0",
     "mocha-sinon": "^2.1.0",
