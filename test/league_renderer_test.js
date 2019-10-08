@@ -10,4 +10,20 @@ describe('leagueRenderer', function () {
     const rendered = leagueRenderer.render(league);
     expect(rendered).to.equal('No players yet');
   });
+
+  it('leaves 17 char names unabbreviated', function () {
+    const league = gameState.createLeague();
+    league.addPlayer('0123456789ABCDEFG');
+    const rendered = leagueRenderer.render(league);
+    expect(rendered).to.equal('-------------------\n|0123456789ABCDEFG|\n-------------------');
+    expect(/\.\.\./.test(rendered)).to.equal(false);
+  });
+
+  it('abbreviates 18 char names', function () {
+    const league = gameState.createLeague();
+    league.addPlayer('0123456789ABCDEFGH');
+    const rendered = leagueRenderer.render(league);
+    expect(rendered).to.equal('-------------------\n|0123456789ABCD...|\n-------------------');
+    expect(/\.\.\./.test(rendered)).to.equal(true);
+  });
 });
