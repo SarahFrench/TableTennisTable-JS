@@ -237,6 +237,36 @@ describe('league', function () {
       //Then
       expect(match).to.throw(`Cannot record match result. Winner '${winner}' must be one row below loser '${loser}'`);
     });
+
+    it('throws error when the winner doesn\'t exist', function () {
+      //Given
+      const league = gameState.createLeague();
+      league.addPlayer('Player1');
+      league.addPlayer('Player2');
+      let winner = 'Player999';
+      let loser = 'Player3';
+      //When
+      const match = function (){
+        league.recordWin(winner, loser);
+      };
+      //Then
+      expect(match).to.throw(`Player '${winner}' is not in the game`);
+    });
+
+    it('throws error when the loser doesn\'t exist', function () {
+      //Given
+      const league = gameState.createLeague();
+      league.addPlayer('Player1');
+      league.addPlayer('Player2');
+      let winner = 'Player2';
+      let loser = 'Player999';
+      //When
+      const match = function (){
+        league.recordWin(winner, loser);
+      };
+      //Then
+      expect(match).to.throw(`Player '${loser}' is not in the game`);
+    });
   });
 
   describe('#getWinner', function () {
