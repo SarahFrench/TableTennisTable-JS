@@ -8,10 +8,13 @@ exports.startGame = function (initialLeague) {
   function recordWin (command) {
     const regex = /record win (\w*) (\w*)/;
     const found = command.match(regex);
-    const winner = found[1];
-    const loser = found[2];
-
-    league.recordWin(winner, loser);
+    if (found !== null){
+      const winner = found[1];
+      const loser = found[2];
+      league.recordWin(winner, loser);
+    } else {
+      throw new InvalidArgumentException('Must supply two player names');
+    }
   }
 
   function save (command) {
