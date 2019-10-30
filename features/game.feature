@@ -5,9 +5,12 @@ Feature: Run a table tennis league
     When I print the league
     Then I should see that there are no players
 
-    Given the league has no players
     When I print the winner
     Then I should see nothing is returned
+
+  Scenario: unknown command
+    When I send incorrect command "ThisCommandDoesntExist" to the app
+    Then I should see an unknown command error message
 
   Scenario: league that contains two players puts them in the right position
     Given that I add player "Player1"
@@ -30,7 +33,7 @@ Feature: Run a table tennis league
     Given that I add player "Player1"
     Given that I add player "Player2"
     When I record "Player1" winning against "Player2"
-    Then I should see "Player1" and "Player2" have not swapped places
+    Then I should see they have not swapped places
 
   Scenario: league that contains three players puts them in the right order
     Given that I add player "Player1"
@@ -50,3 +53,11 @@ Feature: Run a table tennis league
     When I print the league
     Then I should see "Player3" in position 1
     Then I should see "Player1" in position 3
+
+  Scenario: league that contains three players does not record an illegitimate win
+    Given that I add player "Player1"
+    Given that I add player "Player2"
+    Given that I add player "Player3"
+    When I record "Player1" winning against "Player3"
+    When I print the league
+    Then I should see they have not swapped places

@@ -9,6 +9,11 @@ Given('that I add player {string}', function (player) {
   this.response = this.game.sendCommand(`add player ${player}`);
 });
 
+When('I send incorrect command {string} to the app', function (string) {
+  this.command = string;
+  this.response = this.game.sendCommand(string);
+});
+
 When('I record {string} winning against {string}', function (string1, string2) {
   this.originalOrder = this.game.sendCommand('print');
   this.response = this.game.sendCommand(`record win ${string1} ${string2}`);
@@ -30,6 +35,10 @@ Then('I should see nothing is returned', function () {
   expect(this.response).to.be.null;
 });
 
+Then('I should see an unknown command error message', function () {
+  expect(this.response).to.equal(`Unknown command "${this.command}"`);
+});
+
 Then('I should see that there are {int} players', function (int) {
   expect(this.response.match(/Player/g)).to.have.lengthOf(int);
 });
@@ -48,15 +57,10 @@ Then('I should see {string} in position {int}', function (string, int) {
   expect(specificPlayerRegExp.test(allPlayers[position])).to.be.true;
 });
 
-Then('I should see {string} and {string} have not swapped places', function (string1, string2) {
+Then('I should see they have not swapped places', function () {
   //TODO: also a test for the thrown exception? Doesn't seem accessible
   let originalOrder = this.originalOrder;
   let currentOrder = this.game.sendCommand('print');
 
-  let regexP1 = new RegExp(string1, 'g');
-  let regexP2 = new RegExp(string2, 'g');
-
   expect(currentOrder).to.equal(originalOrder);
-  expect(regexP1.exec(currentOrder).index).to.equal(regexP1.exec(originalOrder).index);
-  expect(regexP2.exec(currentOrder).index).to.equal(regexP2.exec(originalOrder).index);
 });
